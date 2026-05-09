@@ -18,6 +18,8 @@ import summaryImage from "./assets/images/regenerated_image_1778338448863.png";
 import { useState } from "react";
 import { ZoomIn, ZoomOut, Maximize2 } from "lucide-react";
 
+import { AIGenerator } from "./components/AIGenerator";
+
 export default function App() {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
@@ -64,7 +66,7 @@ export default function App() {
                   />
                 </div>
                 <p className="text-xl md:text-2xl text-slate-custom/60 font-light leading-relaxed italic">
-                  Specializing in Education, EdTech, and mission-led organizations across UAE, Qatar, Pakistan, and Saudi Arabia.
+                  Specializing in Education, EdTech, and mission-led organizations across UK, Italy, UAE, Qatar, Saudi Arabia and Pakistan.
                 </p>
               </div>
             </div>
@@ -83,6 +85,7 @@ export default function App() {
         <FeaturedCaseStudy />
         <CaseStudies />
         <ExperienceTimeline />
+        <AIGenerator />
         
         {/* CV Embed Section */}
         <Section id="cv" className="bg-navy border-t border-white/10">

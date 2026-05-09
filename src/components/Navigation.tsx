@@ -20,6 +20,7 @@ export function Navbar() {
     { name: "Expertise", href: "#expertise" },
     { name: "Case Studies", href: "#case-studies" },
     { name: "Experience", href: "#experience" },
+    { name: "AI Lab", href: "#ai-lab" },
     { name: "CV", href: "#cv" },
     { name: "Contact", href: "#contact" },
   ];
