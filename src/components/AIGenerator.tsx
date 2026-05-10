@@ -299,10 +299,13 @@ export function AIGenerator() {
                           <div className="flex items-center gap-3 text-[10px] font-mono text-primary uppercase tracking-widest">
                             <Check size={14} /> Positioning Hooks
                           </div>
-                          <div className="space-y-3">
+                          <div className="space-y-4">
                             {outcome.positioningHooks.map((h, i) => (
-                              <div key={i} className="p-4 bg-white/[0.03] border border-white/5 rounded-lg text-white/80 text-sm font-light italic">
-                                "{h}"
+                              <div key={i} className="relative p-6 bg-white/[0.03] border-l-2 border-primary/40 rounded-r-xl hover:bg-white/[0.05] transition-all">
+                                <Quote className="absolute top-2 right-4 text-white/5 opacity-20" size={32} />
+                                <p className="text-white/90 text-sm font-serif italic leading-relaxed relative z-10">
+                                  "{h}"
+                                </p>
                               </div>
                             ))}
                           </div>
@@ -314,25 +317,34 @@ export function AIGenerator() {
                           <div className="flex items-center gap-3 text-[10px] font-mono text-primary uppercase tracking-widest">
                             <Lightbulb size={14} /> Key Messaging Pillars
                           </div>
-                          <ul className="space-y-3">
+                          <div className="grid gap-4">
                             {outcome.keyMessaging.map((m, i) => (
-                              <li key={i} className="flex gap-4 items-start text-sm text-white/60 leading-relaxed font-light">
-                                <div className="mt-1.5 w-1 h-1 bg-primary rounded-full shrink-0" />
-                                {m}
-                              </li>
+                              <div key={i} className="group/msg p-5 bg-white/[0.03] border border-white/10 rounded-xl hover:bg-white/[0.05] hover:border-primary/30 transition-all duration-300">
+                                <div className="flex gap-4 items-start">
+                                  <div className="mt-1 w-2 h-2 rounded-full bg-primary/40 group-hover/msg:bg-primary transition-colors shrink-0" />
+                                  <p className="text-white/70 text-sm leading-relaxed font-light">
+                                    {m}
+                                  </p>
+                                </div>
+                              </div>
                             ))}
-                          </ul>
+                          </div>
                         </div>
 
                         <div className="space-y-4">
                           <div className="flex items-center gap-3 text-[10px] font-mono text-primary uppercase tracking-widest">
                             <ChevronRight size={14} /> Suggested CTAs
                           </div>
-                          <div className="flex flex-col gap-3">
+                          <div className="grid gap-3">
                             {outcome.ctaExamples.map((cta, i) => (
-                              <div key={i} className="px-5 py-3 bg-primary/10 border border-primary/20 rounded-full text-primary text-[10px] font-mono uppercase tracking-widest text-center">
-                                {cta}
-                              </div>
+                              <button 
+                                key={i} 
+                                onClick={() => copyToClipboard(cta)}
+                                className="group/cta relative flex items-center justify-between px-6 py-4 bg-primary/5 border border-primary/20 rounded-xl text-primary text-[10px] font-mono uppercase tracking-[0.2em] text-left hover:bg-primary/10 hover:border-primary/40 transition-all active:scale-[0.98]"
+                              >
+                                <span>{cta}</span>
+                                <ArrowUpRight size={14} className="opacity-40 group-hover/cta:opacity-100 group-hover/cta:translate-x-1 group-hover/cta:-translate-y-1 transition-all" />
+                              </button>
                             ))}
                           </div>
                         </div>
