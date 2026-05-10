@@ -1,4 +1,4 @@
-import { motion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
 import { Download, Mail, Linkedin, MapPin, ArrowRight, Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Button, Section } from "./UI";
@@ -14,12 +14,22 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Prevent scrolling when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }, [mobileMenuOpen]);
+
   const navLinks = [
     { name: "Summary", href: "#summary" },
     { name: "Metrics", href: "#metrics" },
     { name: "Expertise", href: "#expertise" },
     { name: "Case Studies", href: "#case-studies" },
     { name: "Experience", href: "#experience" },
+    { name: "Insights", href: "#insights" },
     { name: "AI Lab", href: "#ai-lab" },
     { name: "CV", href: "#cv" },
     { name: "Contact", href: "#contact" },
@@ -29,7 +39,7 @@ export function Navbar() {
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'bg-navy/90 backdrop-blur-md border-b border-white/10 py-4' : 'bg-transparent py-8'}`}>
       <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
         <a href="#" className="text-2xl font-bold tracking-tighter text-white">
-          YD<span className="text-primary leading-none">.</span>
+          YDNK<span className="text-primary leading-none">.</span>
         </a>
 
         {/* Desktop Nav */}
@@ -50,33 +60,61 @@ export function Navbar() {
 
         {/* Mobile Toggle */}
         <button 
-          className="lg:hidden text-white" 
+          className="lg:hidden text-white z-50 relative p-2" 
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          aria-label="Toggle Menu"
         >
-          {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
       </div>
 
       {/* Mobile Menu */}
-      {mobileMenuOpen && (
-        <motion.div 
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="lg:hidden absolute top-full left-0 right-0 bg-navy border-b border-white/10 p-6 flex flex-col gap-6 items-center"
-        >
-          {navLinks.map((link) => (
-            <a 
-              key={link.name} 
-              href={link.href} 
-              className="text-xs uppercase tracking-widest font-bold text-white/80 hover:text-primary"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              {link.name}
-            </a>
-          ))}
-          <Button className="w-full" href="mailto:ydnkonline@gmail.com">Contact Me</Button>
-        </motion.div>
-      )}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="lg:hidden fixed inset-0 bg-navy z-40 flex flex-col justify-center items-center"
+          >
+            <div className="flex flex-col gap-8 items-center">
+              {navLinks.map((link, i) => (
+                <motion.a 
+                  key={link.name} 
+                  href={link.href}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.05 + 0.2 }}
+                  className="text-3xl font-serif italic text-white/80 hover:text-primary transition-colors tracking-tight"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {link.name}
+                </motion.a>
+              ))}
+              
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: navLinks.length * 0.05 + 0.3 }}
+                className="mt-8 w-full px-12"
+              >
+                <Button className="w-full h-16 text-sm tracking-[0.2em]" href="mailto:ydnkonline@gmail.com">
+                  GET IN TOUCH
+                </Button>
+              </motion.div>
+            </div>
+
+            {/* Decorative element */}
+            <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4">
+              <div className="w-[1px] h-12 bg-white/10" />
+              <div className="text-[9px] font-mono uppercase tracking-[0.3em] text-white/20">
+                Yasir Dil Portfolio
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 }
@@ -91,7 +129,7 @@ export function Hero() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="lg:col-span-7"
         >
-          <span className="editorial-label">// HEAD OF MARKETING</span>
+          <span className="editorial-label">// MARKETING GROWTH LEADER</span>
           <h1 className="text-7xl md:text-8xl lg:text-9xl font-serif italic font-light leading-[0.85] text-white mb-8">
             Yasir <br/> Dil
           </h1>
@@ -133,7 +171,7 @@ export function Hero() {
             
             <img 
               src={heroImage} 
-              alt="Yasir Dil, Head of Marketing and Growth Marketing Strategist" 
+              alt="Yasir Dil, Marketing Growth Leader and Growth Marketing Strategist" 
               className="w-full h-full object-cover grayscale-[0.2] group-hover:grayscale-0 transition-all duration-700"
             />
 

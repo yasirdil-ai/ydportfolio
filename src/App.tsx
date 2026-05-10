@@ -13,12 +13,13 @@ import { Metrics, CaseStudies, FeaturedCaseStudy } from "./components/Achievemen
 import { Expertise } from "./components/Expertise";
 import { ExperienceTimeline, Services, TechAndEducation, Contact } from "./components/Contact";
 import { Section, Button } from "./components/UI";
-import { motion, useScroll, useSpring } from "motion/react";
+import { motion, useScroll, useSpring, AnimatePresence } from "motion/react";
 import summaryImage from "./assets/images/regenerated_image_1778338448863.png";
 import { useState } from "react";
-import { ZoomIn, ZoomOut, Maximize2 } from "lucide-react";
+import { ZoomIn, ZoomOut, Maximize2, Loader2 } from "lucide-react";
 
 import { AIGenerator } from "./components/AIGenerator";
+import { Insights } from "./components/Insights";
 
 export default function App() {
   const { scrollYProgress } = useScroll();
@@ -29,6 +30,7 @@ export default function App() {
   });
 
   const [zoom, setZoom] = useState(1);
+  const [cvLoading, setCvLoading] = useState(true);
 
   const handleZoomIn = () => setZoom(prev => Math.min(prev + 0.1, 2));
   const handleZoomOut = () => setZoom(prev => Math.max(prev - 0.1, 0.5));
@@ -85,6 +87,7 @@ export default function App() {
         <FeaturedCaseStudy />
         <CaseStudies />
         <ExperienceTimeline />
+        <Insights />
         <AIGenerator />
         
         {/* CV Embed Section */}
@@ -130,6 +133,33 @@ export default function App() {
           </div>
           
           <div className="relative w-full h-[600px] md:h-[800px] bg-white rounded-sm shadow-2xl overflow-auto custom-scrollbar">
+            <AnimatePresence>
+              {cvLoading && (
+                <motion.div 
+                  initial={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="absolute inset-0 z-10 bg-white flex flex-col items-center justify-center"
+                >
+                  <div className="w-full max-w-2xl px-12 space-y-8 animate-pulse">
+                    <div className="h-8 bg-slate-100 w-1/3 rounded-sm" />
+                    <div className="space-y-4">
+                      <div className="h-4 bg-slate-50 w-full rounded-sm" />
+                      <div className="h-4 bg-slate-50 w-full rounded-sm" />
+                      <div className="h-4 bg-slate-50 w-3/4 rounded-sm" />
+                    </div>
+                    <div className="pt-12 space-y-6">
+                      <div className="h-24 bg-slate-200/50 w-full rounded-sm" />
+                      <div className="h-4 bg-slate-50 w-full rounded-sm" />
+                      <div className="h-4 bg-slate-50 w-5/6 rounded-sm" />
+                    </div>
+                    <div className="flex justify-center pt-12">
+                      <Loader2 className="animate-spin text-primary/40" size={24} />
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+            
             <div 
               style={{ 
                 transform: `scale(${zoom})`, 
@@ -137,12 +167,13 @@ export default function App() {
                 height: zoom > 1 ? 'auto' : '100%',
                 minHeight: '100%'
               }}
-              className="transition-transform duration-300 ease-out"
+              className={`transition-transform duration-300 ease-out ${cvLoading ? 'opacity-0' : 'opacity-100'}`}
             >
               <iframe 
                 src="https://docs.google.com/document/d/e/2PACX-1vR9BFSuk1DU1-LkvS2tcls-R0fZxHh0BTElJNgSApgoXoz5GfYjIxnQxK3I_yYyNA/pub?embedded=true" 
                 className="w-full h-[1200px] border-0"
                 title="Yasir Dil CV"
+                onLoad={() => setCvLoading(false)}
               />
             </div>
           </div>

@@ -1,4 +1,5 @@
-import { motion } from "motion/react";
+import { motion, useInView, animate } from "motion/react";
+import { useEffect, useRef } from "react";
 import { CaseStudy, METRICS, CASE_STUDIES } from "../data";
 import { Section } from "./UI";
 import { CheckCircle2, Layout, Database, TrendingUp, Users, ArrowRight } from "lucide-react";
@@ -8,6 +9,41 @@ interface CaseStudyCardProps {
   cs: CaseStudy;
   index: number;
   key?: string | number;
+}
+
+function AnimatedCounter({ value }: { value: string }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-50px" });
+  
+  // Extract number and formatting
+  // e.g. "21,000+" -> 21000 and "+"
+  const numberPart = value.replace(/[^0-9]/g, "");
+  const suffix = value.replace(/[0-9,]/g, "");
+  const targetNumber = parseInt(numberPart, 10);
+
+  useEffect(() => {
+    if (isInView && !isNaN(targetNumber)) {
+      const controls = animate(0, targetNumber, {
+        duration: 2.5,
+        ease: [0.16, 1, 0.3, 1], // easeOutQuart
+        onUpdate: (latest) => {
+          if (ref.current) {
+            // Re-format with commas if the original had them
+            const formatted = Math.round(latest).toLocaleString();
+            ref.current.textContent = formatted;
+          }
+        },
+      });
+      return () => controls.stop();
+    }
+  }, [isInView, targetNumber]);
+
+  return (
+    <span className="tabular-nums">
+      <span ref={ref}>0</span>
+      <span className="text-primary">{suffix}</span>
+    </span>
+  );
 }
 
 export function Metrics() {
@@ -40,7 +76,7 @@ export function Metrics() {
             className="p-8 bg-white/5 border-l-2 border-primary flex flex-col justify-center min-h-[180px] hover:bg-white/10 transition-colors duration-500"
           >
             <div className="text-4xl font-serif italic text-white mb-2">
-              {metric.value}
+              <AnimatedCounter value={metric.value} />
             </div>
             <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-primary font-bold mb-4">
               {metric.label}

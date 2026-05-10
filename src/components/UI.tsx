@@ -34,10 +34,12 @@ interface ButtonProps {
   className?: string;
   icon?: ReactNode;
   download?: string;
+  type?: "button" | "submit" | "reset";
+  disabled?: boolean;
 }
 
-export function Button({ children, onClick, href, variant = "primary", className = "", icon, download }: ButtonProps) {
-  const baseStyles = "inline-flex items-center justify-center gap-2 px-6 py-4 font-bold transition-all duration-300 active:scale-95 text-xs uppercase tracking-widest";
+export function Button({ children, onClick, href, variant = "primary", className = "", icon, download, type = "button", disabled = false }: ButtonProps) {
+  const baseStyles = "inline-flex items-center justify-center gap-2 px-6 py-4 font-bold transition-all duration-300 active:scale-95 text-xs uppercase tracking-widest disabled:opacity-50 disabled:pointer-events-none disabled:active:scale-100";
   
   const variants = {
     primary: "bg-primary text-navy hover:brightness-110",
@@ -68,7 +70,7 @@ export function Button({ children, onClick, href, variant = "primary", className
   }
 
   return (
-    <button onClick={onClick} className={`${baseStyles} ${variants[variant]} ${className}`}>
+    <button type={type} onClick={onClick} disabled={disabled} className={`${baseStyles} ${variants[variant]} ${className}`}>
       {content}
     </button>
   );

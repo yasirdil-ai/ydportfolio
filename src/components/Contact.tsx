@@ -1,8 +1,10 @@
-import { motion } from "motion/react";
+import React, { useState, useRef } from "react";
+import { motion, AnimatePresence } from "motion/react";
 import { EXPERIENCE, SERVICES, TECH_STACK, EDUCATION } from "../data";
 import { Section, Button } from "./UI";
-import { Briefcase, Layers, Zap, GraduationCap, Mail, Phone, MapPin, Linkedin, Send, ArrowRight } from "lucide-react";
+import { Briefcase, Layers, Zap, GraduationCap, Mail, Phone, MapPin, Linkedin, Send, ArrowRight, CheckCircle2, AlertCircle } from "lucide-react";
 import summaryImage from "../assets/images/regenerated_image_1778338448863.png";
+import { LinkedInFeed } from "./LinkedInFeed";
 
 export function ExperienceTimeline() {
   return (
@@ -144,6 +146,44 @@ export function TechAndEducation() {
 }
 
 export function Contact() {
+  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+  const [errorMsg, setErrorMsg] = useState("");
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setStatus('sending');
+    setErrorMsg("");
+
+    const formData = new FormData(e.currentTarget);
+    const payload = {
+      name: formData.get('name'),
+      email: formData.get('email'),
+      category: formData.get('category'),
+      message: formData.get('message'),
+    };
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) throw new Error("Failed to send");
+
+      setStatus('success');
+      formRef.current?.reset();
+      
+      // Auto-revert to idle after 8 seconds
+      setTimeout(() => setStatus('idle'), 8000);
+    } catch (err) {
+      console.error(err);
+      setStatus('error');
+      setErrorMsg("Something went wrong. Please try again.");
+    }
+  };
+
   return (
     <Section id="contact" className="bg-navy border-t border-white/10 overflow-hidden">
       <div className="grid lg:grid-cols-12 gap-20">
@@ -195,37 +235,74 @@ export function Contact() {
         </div>
 
         <div className="lg:col-span-7">
-          <form className="bg-white/5 p-12 md:p-16 border border-white/10 space-y-10" onSubmit={(e) => e.preventDefault()}>
-            <div className="grid md:grid-cols-2 gap-10">
-              <div className="space-y-3">
-                <label className="text-[9px] font-mono uppercase tracking-[0.2em] text-white/40">Identification</label>
-                <input type="text" className="w-full bg-transparent border-b border-white/10 py-4 text-white text-lg font-light focus:border-primary outline-hidden transition-colors" placeholder="Full Name" />
-              </div>
-              <div className="space-y-3">
-                <label className="text-[9px] font-mono uppercase tracking-[0.2em] text-white/40">Electronic Mail</label>
-                <input type="email" className="w-full bg-transparent border-b border-white/10 py-4 text-white text-lg font-light focus:border-primary outline-hidden transition-colors" placeholder="email@address.com" />
-              </div>
-            </div>
-            <div className="space-y-3">
-              <label className="text-[9px] font-mono uppercase tracking-[0.2em] text-white/40">Inquiry Type</label>
-              <select className="w-full bg-transparent border-b border-white/10 py-4 text-white text-lg font-light focus:border-primary outline-hidden transition-colors appearance-none cursor-pointer">
-                <option className="bg-navy">Select a category...</option>
-                <option className="bg-navy">Executive Leadership</option>
-                <option className="bg-navy">Fractional Role</option>
-                <option className="bg-navy">Consulting Project</option>
-                <option className="bg-navy">Global Recruitment</option>
-                <option className="bg-navy">Other</option>
-              </select>
-            </div>
-            <div className="space-y-3">
-              <label className="text-[9px] font-mono uppercase tracking-[0.2em] text-white/40">Brief Message</label>
-              <textarea rows={3} className="w-full bg-transparent border-b border-white/10 py-4 text-white text-lg font-light focus:border-primary outline-hidden transition-colors resize-none" placeholder="How can we collaborate?"></textarea>
-            </div>
-            <Button className="w-full px-12 h-16 text-sm tracking-[0.3em]" icon={<ArrowRight size={14} />}>
-              ENQUIRY
-            </Button>
-          </form>
+          <AnimatePresence mode="wait">
+            {status === 'success' ? (
+              <motion.div 
+                key="success"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                className="bg-primary/5 p-16 border border-primary/20 flex flex-col items-center text-center justify-center h-full min-h-[500px]"
+              >
+                <CheckCircle2 className="text-primary mb-6" size={64} />
+                <h3 className="text-3xl font-serif italic text-white mb-4">Submission Received</h3>
+                <p className="text-slate-400 max-w-sm italic">
+                  Thank you for submitting your enquiry. I’ll get back to you shortly.
+                </p>
+                <div className="mt-12 h-[1px] w-12 bg-primary/30" />
+              </motion.div>
+            ) : (
+              <motion.form 
+                ref={formRef}
+                key="form"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="bg-white/5 p-12 md:p-16 border border-white/10 space-y-10" 
+                onSubmit={handleSubmit}
+              >
+                {status === 'error' && (
+                  <div className="bg-red-500/10 border border-red-500/20 p-4 flex items-center gap-3 text-red-500 text-sm">
+                    <AlertCircle size={16} />
+                    {errorMsg}
+                  </div>
+                )}
+                <div className="grid md:grid-cols-2 gap-10">
+                  <div className="space-y-3">
+                    <label className="text-[9px] font-mono uppercase tracking-[0.2em] text-white/40">Identification</label>
+                    <input name="name" type="text" required disabled={status === 'sending'} className="w-full bg-transparent border-b border-white/10 py-4 text-white text-lg font-light focus:border-primary outline-hidden transition-colors disabled:opacity-50" placeholder="Full Name" />
+                  </div>
+                  <div className="space-y-3">
+                    <label className="text-[9px] font-mono uppercase tracking-[0.2em] text-white/40">Electronic Mail</label>
+                    <input name="email" type="email" required disabled={status === 'sending'} className="w-full bg-transparent border-b border-white/10 py-4 text-white text-lg font-light focus:border-primary outline-hidden transition-colors disabled:opacity-50" placeholder="email@address.com" />
+                  </div>
+                </div>
+                <div className="space-y-3">
+                  <label className="text-[9px] font-mono uppercase tracking-[0.2em] text-white/40">Inquiry Type</label>
+                  <select name="category" disabled={status === 'sending'} className="w-full bg-transparent border-b border-white/10 py-4 text-white text-lg font-light focus:border-primary outline-hidden transition-colors appearance-none cursor-pointer disabled:opacity-50">
+                    <option className="bg-navy" value="Not Specified">Select a category...</option>
+                    <option className="bg-navy" value="Executive Leadership">Executive Leadership</option>
+                    <option className="bg-navy" value="Fractional Role">Fractional Role</option>
+                    <option className="bg-navy" value="Consulting Project">Consulting Project</option>
+                    <option className="bg-navy" value="Global Recruitment">Global Recruitment</option>
+                    <option className="bg-navy" value="Other">Other</option>
+                  </select>
+                </div>
+                <div className="space-y-3">
+                  <label className="text-[9px] font-mono uppercase tracking-[0.2em] text-white/40">Brief Message</label>
+                  <textarea name="message" rows={3} required disabled={status === 'sending'} className="w-full bg-transparent border-b border-white/10 py-4 text-white text-lg font-light focus:border-primary outline-hidden transition-colors resize-none disabled:opacity-50" placeholder="How can we collaborate?"></textarea>
+                </div>
+                <Button type="submit" disabled={status === 'sending'} className="w-full px-12 h-16 text-sm tracking-[0.3em]" icon={status === 'sending' ? null : <ArrowRight size={14} />}>
+                  {status === 'sending' ? "Sending..." : "ENQUIRY"}
+                </Button>
+              </motion.form>
+            )}
+          </AnimatePresence>
         </div>
+      </div>
+
+      <div className="mt-40">
+        <LinkedInFeed />
       </div>
 
       <footer className="mt-40 pt-12 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-8 opacity-20 text-[9px] font-mono uppercase tracking-widest">
