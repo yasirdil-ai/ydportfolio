@@ -11,14 +11,14 @@
 import { Navbar, Hero } from "./components/Navigation";
 import { Metrics, CaseStudies, FeaturedCaseStudy } from "./components/Achievements";
 import { Expertise } from "./components/Expertise";
+import { AIStudio } from "./components/AIStudio";
 import { ExperienceTimeline, Services, TechAndEducation, Contact } from "./components/Contact";
 import { Section, Button } from "./components/UI";
 import { motion, useScroll, useSpring, AnimatePresence } from "motion/react";
 import summaryImage from "./assets/images/regenerated_image_1778338448863.png";
 import { useState } from "react";
-import { ZoomIn, ZoomOut, Maximize2, Loader2 } from "lucide-react";
+import { ZoomIn, ZoomOut, Maximize2, Loader2, Info } from "lucide-react";
 
-import { AIGenerator } from "./components/AIGenerator";
 import { Insights } from "./components/Insights";
 
 export default function App() {
@@ -37,10 +37,10 @@ export default function App() {
   const handleResetZoom = () => setZoom(1);
 
   return (
-    <div className="relative selection:bg-primary/30 selection:text-white">
+    <div className="relative selection:bg-primary selection:text-background">
       {/* Scroll Progress Bar */}
       <motion.div 
-        className="fixed top-0 left-0 right-0 h-1 bg-primary z-[100] origin-left" 
+        className="fixed top-0 left-0 right-0 h-[2px] bg-primary z-[100] origin-left shadow-[0_0_10px_rgba(var(--primary-rgb),0.5)]" 
         style={{ scaleX }}
       />
       
@@ -51,80 +51,101 @@ export default function App() {
         <Metrics />
         
         {/* About Executive Summary Section */}
-        <Section id="summary" className="bg-navy border-t border-white/10" containerClassName="max-w-5xl">
-          <span className="editorial-label mb-12">Executive Summary</span>
+        <Section id="summary" className="border-t border-border-subtle overflow-hidden" containerClassName="max-w-5xl relative">
+          {/* Decorative Grid Accent */}
+          <div className="absolute top-0 right-0 w-32 h-32 opacity-10 animate-grid pointer-events-none" />
+
+          <span className="editorial-label mb-12">// STRATEGIC POSITIONING</span>
           <div className="grid md:grid-cols-12 gap-12 items-start">
             <div className="md:col-span-8">
-              <h2 className="text-4xl md:text-6xl font-serif italic text-white leading-tight mb-12">
-                Yasir Dil is a <span className="font-bold underline decoration-primary/20 underline-offset-8">senior marketing leader</span> with 11+ years of building engines for global knowledge brands.
+              <h2 className="text-4xl md:text-6xl font-display font-light text-text-primary leading-tight mb-12 tracking-tight">
+                Senior marketing leader with <span className="font-bold underline decoration-primary/20 underline-offset-[12px] decoration-4">11+ years</span> of building growth engines for global knowledge brands.
               </h2>
-              <div className="flex flex-col sm:flex-row gap-8 items-start">
-                <div className="flex-shrink-0 w-24 h-24 rounded-2xl overflow-hidden border border-white/10 grayscale hover:grayscale-0 transition-all">
-                  <img 
-                    src={summaryImage} 
-                    alt="Yasir Dil" 
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                  />
+              <div className="flex flex-col sm:flex-row gap-10 items-start">
+                <div className="flex-shrink-0 w-28 h-28 rounded-2xl overflow-hidden border border-border-subtle p-1 hover:border-primary/30 transition-all duration-500 group">
+                  <div className="w-full h-full rounded-xl overflow-hidden grayscale dark:grayscale hover:grayscale-0 transition-all duration-700">
+                    <img 
+                      src={summaryImage} 
+                      alt="Yasir Dil Profile Photo" 
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                      loading="lazy"
+                    />
+                  </div>
                 </div>
-                <p className="text-xl md:text-2xl text-slate-custom/60 font-light leading-relaxed italic">
-                  Specializing in Education, EdTech, and mission-led organizations across UK, Italy, UAE, Qatar, Saudi Arabia and Pakistan.
+                <p className="text-xl md:text-2xl text-text-secondary leading-relaxed font-light italic border-l-2 border-primary/20 pl-8">
+                  Architecting <span className="text-text-primary font-medium">high-performance ecosystems</span> across UK, Italy, UAE, Qatar, KSA and Pakistan.
                 </p>
               </div>
             </div>
-            <div className="md:col-span-4 flex flex-col justify-end h-full">
-              <div className="space-y-6 border-l border-white/10 pl-8">
-                <div className="text-[10px] font-mono uppercase tracking-widest text-primary font-bold">Scope of Work</div>
-                <div className="text-sm font-medium text-white/80 leading-relaxed">
-                  Demand Generation • CRM Architecture • Revenue Ops • Multi-Market PMO • Brand Positioning
+            <div className="md:col-span-4 self-stretch">
+              <div className="h-full flex flex-col justify-between py-2 space-y-12">
+                <div className="space-y-6 border-l border-border-subtle pl-8">
+                  <div className="text-[10px] font-mono uppercase tracking-[0.3em] text-primary font-bold">Deployment Scope</div>
+                  <div className="text-xs font-bold uppercase tracking-widest text-text-primary/80 leading-loose">
+                    Demand Generation<br/>
+                    CRM Architecture<br/>
+                    Revenue Ops<br/>
+                    Multi-Market PMO<br/>
+                    Brand Positioning
+                  </div>
+                </div>
+                
+                <div className="flex items-center gap-3 px-4 py-3 bg-surface border border-border-subtle rounded-xl">
+                  <div className="p-2 bg-primary/10 rounded-lg text-primary">
+                    <Info size={16} />
+                  </div>
+                  <div>
+                    <div className="text-[8px] font-mono uppercase tracking-widest text-text-secondary">Current Location</div>
+                    <div className="text-xs font-display font-bold text-text-primary">Dubai, UAE (UTC+4)</div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </Section>
 
+        <AIStudio />
         <Expertise />
         <FeaturedCaseStudy />
         <CaseStudies />
         <ExperienceTimeline />
         <Insights />
-        <AIGenerator />
         
         {/* CV Embed Section */}
-        <Section id="cv" className="bg-navy border-t border-white/10">
+        <Section id="cv" className="border-t border-border-subtle">
           <div className="mb-24 px-6 md:px-0 flex flex-col md:flex-row md:items-end justify-between gap-8">
             <div className="max-w-xl">
               <span className="editorial-label">Credentials</span>
-              <h2 className="text-5xl md:text-6xl font-serif italic text-white mb-6">
+              <h2 className="text-5xl md:text-6xl font-serif italic text-text-primary mb-6">
                 Curriculum <span className="text-primary font-normal not-italic">Vitae</span>
               </h2>
-              <p className="text-slate-400 text-sm font-light leading-relaxed">
+              <p className="text-text-secondary text-sm font-light leading-relaxed">
                 Live document reflecting the latest strategic marketing leadership achievements and certifications.
               </p>
             </div>
             
-            <div className="flex items-center gap-2 bg-white/5 p-2 border border-white/10 rounded-lg">
+            <div className="flex items-center gap-2 bg-surface p-2 border border-border-subtle rounded-lg">
               <button 
                 onClick={handleZoomOut}
-                className="p-2 hover:bg-white/10 text-white transition-colors" 
+                className="p-2 hover:bg-text-secondary/10 text-text-primary transition-colors" 
                 title="Zoom Out"
               >
                 <ZoomOut size={16} />
               </button>
-              <span className="text-[10px] font-mono text-white/50 w-12 text-center">
+              <span className="text-[10px] font-mono text-text-secondary w-12 text-center">
                 {Math.round(zoom * 100)}%
               </span>
               <button 
                 onClick={handleZoomIn}
-                className="p-2 hover:bg-white/10 text-white transition-colors" 
+                className="p-2 hover:bg-text-secondary/10 text-text-primary transition-colors" 
                 title="Zoom In"
               >
                 <ZoomIn size={16} />
               </button>
-              <div className="w-px h-4 bg-white/10 mx-1" />
+              <div className="w-px h-4 bg-border-subtle mx-1" />
               <button 
                 onClick={handleResetZoom}
-                className="p-2 hover:bg-white/10 text-white transition-colors" 
+                className="p-2 hover:bg-text-secondary/10 text-text-primary transition-colors" 
                 title="Reset Zoom"
               >
                 <Maximize2 size={16} />
@@ -132,7 +153,7 @@ export default function App() {
             </div>
           </div>
           
-          <div className="relative w-full h-[600px] md:h-[800px] bg-white rounded-sm shadow-2xl overflow-auto custom-scrollbar">
+          <div className="relative w-full h-[600px] md:h-[800px] bg-white rounded-sm shadow-2xl overflow-auto custom-scrollbar border border-border-subtle">
             <AnimatePresence>
               {cvLoading && (
                 <motion.div 

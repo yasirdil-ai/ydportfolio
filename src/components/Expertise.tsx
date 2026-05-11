@@ -5,74 +5,109 @@ import { Zap, ShieldCheck, BarChart3, Globe, Rocket, BrainCircuit } from "lucide
 export function Expertise() {
   const categories = [
     {
-      title: "Growth & Demand Generation",
-      icon: <Rocket />,
-      items: ["Full-funnel demand generation", "Paid acquisition", "Lead nurturing", "MQL/SQL workflows", "Funnel optimization", "CRO", "Multi-touch attribution"]
+      title: "Growth & Demand Gen",
+      icon: <Rocket size={20} />,
+      items: ["Full-funnel demand generation", "Paid acquisition", "Lead nurturing", "MQL/SQL workflows", "Funnel optimization", "CRO", "Multi-touch attribution"],
+      glow: "hover:shadow-primary/5"
     },
     {
-      title: "CRM & Marketing Tech",
-      icon: <Zap />,
-      items: ["HubSpot", "Zoho CRM", "Salesforce", "Lead scoring", "Marketing automation", "Workflow design", "Performance dashboards", "AI personalization"]
+      title: "CRM & MarTech Systems",
+      icon: <Zap size={20} />,
+      items: ["HubSpot architecture", "Zoho & Salesforce", "Lead scoring systems", "Marketing automation", "Workflow logic design", "Performance dashboards", "AI personalization"],
+      glow: "hover:shadow-secondary/5"
     },
     {
-      title: "Marketing Leadership",
-      icon: <ShieldCheck />,
-      items: ["Regional marketing strategy", "Team leadership", "Cross-border management", "Budget & ROI ownership", "Sprint-based execution", "OKR culture", "Stakeholder management"]
+      title: "Strategic Leadership",
+      icon: <ShieldCheck size={20} />,
+      items: ["Regional marketing strategy", "Team leadership", "Cross-border PMO", "Budget & ROI ownership", "Sprint-based execution", "OKR culture", "Stakeholder management"],
+      glow: "hover:shadow-primary/5"
     },
     {
-      title: "Brand & Content",
-      icon: <Globe />,
-      items: ["Brand positioning", "Multi-brand management", "Storytelling", "Video production", "Social media growth", "Campaign messaging", "Community engagement"]
+      title: "Brand & Positioning",
+      icon: <Globe size={20} />,
+      items: ["Brand architecture", "Multi-brand systems", "Strategic storytelling", "Asset production", "Social media growth", "Campaign messaging", "Community engagement"],
+      glow: "hover:shadow-secondary/5"
     },
     {
-      title: "Education & EdTech",
-      icon: <BarChart3 />,
-      items: ["International schools", "Multi-campus groups", "Academic publishing", "Higher education", "Think tanks", "NGOs", "Youth campaigns"]
+      title: "Education Verticals",
+      icon: <BarChart3 size={20} />,
+      items: ["International schools", "Multi-campus groups", "Academic publishing", "Higher education", "Think tanks", "NGO growth", "Youth campaigns"],
+      glow: "hover:shadow-primary/5"
     },
     {
-      title: "AI & Marketing Innovation",
-      icon: <BrainCircuit />,
+      title: "Neural Innovation",
+      icon: <BrainCircuit size={20} />,
       items: [
         "AI-POWERED CAMPAIGNS",
         "PREDICTIVE LEAD SCORING",
         "SMART CONTENT PERSONALIZATION",
-        "MARKETING AUTOMATION WITH AI",
-        "CHATBOT & CONVERSATIONAL MARKETING",
-        "AI-DRIVEN INSIGHTS & REPORTING",
-        "EXPERIMENTATION & A/B TESTING"
-      ]
+        "CRM AUTOMATION WITH AI",
+        "CHATBOT ARCHITECTURE",
+        "AI-DRIVEN INSIGHTS",
+        "RAPID EXPERIMENTATION"
+      ],
+      glow: "hover:shadow-primary/10 border-primary/20",
+      featured: true
     }
   ];
 
   return (
-    <Section id="expertise" className="bg-navy">
-      <div className="mb-24">
-        <span className="editorial-label">Core Competency</span>
-        <h2 className="text-5xl md:text-6xl font-serif italic text-white mb-6">
-          Technical <span className="text-primary font-normal not-italic">Expertise</span>
-        </h2>
+    <Section id="expertise" className="relative overflow-hidden">
+      <div className="absolute top-0 left-0 w-full h-full animate-grid opacity-5 pointer-events-none" />
+      
+      <div className="mb-24 flex justify-between items-end">
+        <div className="max-w-xl">
+          <span className="editorial-label">// SYSTEM_CAPABILITIES</span>
+          <h2 className="text-5xl md:text-7xl font-display font-light text-text-primary tracking-tightest">
+            Strategic <span className="font-bold text-primary italic">Architecture.</span>
+          </h2>
+        </div>
+        <div className="hidden md:block text-[8px] font-mono text-text-secondary/30 uppercase tracking-[0.5em] vertical-text">
+          YDNK_PORTFOLIO_V1.1
+        </div>
       </div>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-white/10 border border-white/10">
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {categories.map((cat, i) => (
-          <div key={i} className="p-8 bg-navy border border-white/5 flex flex-col justify-between group h-full">
-            <div>
-              <div className="text-primary mb-12 opacity-50 group-hover:opacity-100 transition-opacity">
-                {cat.icon}
+          <motion.div 
+            key={i} 
+            initial={{ opacity: 0, scale: 0.98 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: i * 0.05 }}
+            className={`group relative p-10 bg-surface border border-border-subtle rounded-3xl transition-all duration-500 overflow-hidden ${cat.glow} ${cat.featured ? 'border-primary/20 lg:col-span-1 shadow-lg' : ''}`}
+          >
+            {cat.featured && (
+              <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 blur-[60px] rounded-full -translate-y-12 translate-x-12" />
+            )}
+            
+            <div className="relative z-10">
+              <div className="flex justify-between items-start mb-12">
+                <div className={`p-3 rounded-xl ${cat.featured ? 'bg-primary text-background' : 'bg-primary/10 text-primary'} transition-transform duration-500 group-hover:scale-110`}>
+                  {cat.icon}
+                </div>
+                <div className="text-[10px] font-mono text-text-secondary/20 font-bold group-hover:text-primary transition-colors">
+                  SEC_0{i + 1}
+                </div>
               </div>
-              <h3 className="text-lg font-serif italic text-white mb-8 pr-4">
+              
+              <h3 className={`text-xl font-display font-bold text-text-primary mb-8 ${cat.featured ? 'text-primary' : ''}`}>
                 {cat.title}
               </h3>
+              
               <ul className="space-y-4">
                 {cat.items.map((item, j) => (
-                  <li key={j} className="text-[11px] uppercase tracking-wider text-slate-500 font-bold flex items-start gap-3">
-                    <span className="w-1 h-1 bg-primary/40 mt-1 flex-shrink-0" />
+                  <li key={j} className="text-[10px] uppercase tracking-[0.1em] text-text-secondary/70 font-bold flex items-start gap-3 group-hover:text-text-primary transition-colors">
+                    <span className={`w-1 h-1 mt-1.5 flex-shrink-0 rounded-full ${cat.featured ? 'bg-primary animate-pulse' : 'bg-primary/40'}`} />
                     {item}
                   </li>
                 ))}
               </ul>
             </div>
-          </div>
+            
+            {/* Animated Bottom Light */}
+            <div className="absolute bottom-0 left-10 right-10 h-[1px] bg-linear-to-r from-transparent via-primary/50 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-700" />
+          </motion.div>
         ))}
       </div>
     </Section>

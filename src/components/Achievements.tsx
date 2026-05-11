@@ -48,42 +48,49 @@ function AnimatedCounter({ value }: { value: string }) {
 
 export function Metrics() {
   return (
-    <Section id="metrics">
+    <Section id="metrics" className="relative">
+      <div className="absolute inset-0 animate-grid opacity-5 pointer-events-none" />
+      
       <div className="mb-24 flex flex-col md:flex-row md:items-end justify-between gap-12">
         <div className="max-w-xl">
-          <span className="editorial-label">Performance Core</span>
-          <h2 className="text-5xl md:text-6xl font-serif italic text-white mb-6">
-            Growth <span className="text-primary font-normal not-italic">Metrics</span>
+          <span className="editorial-label">// ANALYTICS_REALTIIME</span>
+          <h2 className="text-5xl md:text-7xl font-display font-light text-text-primary mb-6 tracking-tightest">
+            Performance <span className="font-bold text-primary italic">Metrics.</span>
           </h2>
         </div>
-        <p className="text-slate-400 max-w-sm text-sm font-light leading-relaxed">
-          Quantifiable impact delivered for international education brands, FMCG campaigns, and EdTech startups.
+        <p className="text-text-secondary max-w-sm text-sm font-light leading-relaxed border-l border-primary/20 pl-6">
+          Quantifiable impact delivered across international education networks, EdTech scaling, and mission-led growth.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {METRICS.map((metric, index) => (
           <motion.div
             key={metric.label}
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ 
-              duration: 0.5, 
-              delay: index * 0.08,
-              ease: [0.21, 0.47, 0.32, 0.98] 
+              duration: 0.6, 
+              delay: index * 0.1,
+              ease: [0.16, 1, 0.3, 1] 
             }}
-            viewport={{ once: true, margin: "-20px" }}
-            className="p-8 bg-white/5 border-l-2 border-primary flex flex-col justify-center min-h-[180px] hover:bg-white/10 transition-colors duration-500"
+            viewport={{ once: true }}
+            className="group relative overflow-hidden bg-surface border border-border-subtle p-8 rounded-2xl hover:border-primary/40 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/5"
           >
-            <div className="text-4xl font-serif italic text-white mb-2">
-              <AnimatedCounter value={metric.value} />
+            <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 blur-[40px] rounded-full translate-x-12 -translate-y-12 group-hover:bg-primary/10 transition-all duration-700" />
+            
+            <div className="relative z-10">
+              <div className="text-5xl font-display font-bold text-text-primary mb-4 tracking-tighter">
+                <AnimatedCounter value={metric.value} />
+              </div>
+              <div className="text-[10px] font-mono uppercase tracking-[0.3em] text-primary font-bold mb-4 flex items-center gap-2">
+                <div className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse" />
+                {metric.label}
+              </div>
+              <p className="text-xs text-text-secondary leading-relaxed font-light">
+                {metric.description}
+              </p>
             </div>
-            <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-primary font-bold mb-4">
-              {metric.label}
-            </div>
-            <p className="text-xs text-white/40 leading-relaxed font-light">
-              {metric.description}
-            </p>
           </motion.div>
         ))}
       </div>
@@ -94,15 +101,15 @@ export function Metrics() {
 export function CaseStudies() {
   const otherCaseStudies = CASE_STUDIES.slice(1);
   return (
-    <Section id="case-studies" className="bg-navy border-t border-white/10">
-      <div className="mb-24">
-        <span className="editorial-label">Selected Achievements</span>
-        <h2 className="text-5xl md:text-6xl font-serif italic text-white mb-6">
-          More <span className="text-primary font-normal not-italic">Case Studies</span>
+    <Section id="case-studies" className="border-t border-border-subtle bg-surface/10">
+      <div className="mb-24 px-6 md:px-0">
+        <span className="editorial-label">// INVENTORY_STRATEGIC</span>
+        <h2 className="text-5xl md:text-7xl font-display font-light text-text-primary mb-6 tracking-tightest">
+          Growth <span className="font-bold text-primary italic">Intelligence Capsules.</span>
         </h2>
       </div>
 
-      <div className="grid gap-px bg-white/10 border border-white/10 rounded-sm overflow-hidden lg:grid-cols-2">
+      <div className="grid gap-6 lg:grid-cols-2">
         {otherCaseStudies.map((cs, index) => (
           <CaseStudyCard key={cs.id} cs={cs} index={index + 1} />
         ))}
@@ -114,48 +121,54 @@ export function CaseStudies() {
 export function FeaturedCaseStudy() {
   const cs = CASE_STUDIES[0];
   return (
-    <Section id="featured-case" className="bg-navy border-t border-white/10">
+    <Section id="featured-case" className="border-t border-border-subtle overflow-hidden">
       <div className="grid lg:grid-cols-2 gap-20 items-center">
         <motion.div
-           initial={{ opacity: 0, x: -30 }}
-           whileInView={{ opacity: 1, x: 0 }}
+           initial={{ opacity: 0, y: 30 }}
+           whileInView={{ opacity: 1, y: 0 }}
            viewport={{ once: true }}
+           className="relative"
         >
-          <span className="editorial-label">In-Depth Case Study</span>
-          <h2 className="text-5xl md:text-7xl font-serif italic text-white mb-10 leading-tight">
-            Scaling <span className="text-primary not-italic font-normal">Regional Growth</span> Across 11 Schools.
+          <span className="editorial-label">// CASE_STUDY_ALPHA</span>
+          <h2 className="text-5xl md:text-7xl font-display font-light text-text-primary mb-12 leading-[0.9] tracking-tightest">
+            Scaling <br/> <span className="font-bold italic text-primary">High-Volume</span> <br/> Funnels.
           </h2>
+          
           <div className="space-y-12">
-            <div>
-              <h4 className="text-[10px] font-mono uppercase tracking-[0.3em] text-white/30 mb-4">The Challenge</h4>
-              <p className="text-xl text-slate-custom/60 font-light leading-relaxed italic">
-                {cs.challenge} Fragmentation across multiple markets required a unified engine that could scale without losing brand equity.
+            <div className="p-8 bg-surface border border-border-subtle rounded-2xl relative group">
+              <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-2xl" />
+              <h4 className="text-[10px] font-mono uppercase tracking-[0.4em] text-text-secondary/40 mb-6">Strategic Challenge</h4>
+              <p className="text-lg text-text-secondary leading-relaxed font-light italic relative z-10 border-l-2 border-primary/30 pl-8">
+                {cs.challenge} Fragmented market architecture required a unified intelligence engine to scale without equity leakage.
               </p>
             </div>
-            <div className="grid md:grid-cols-2 gap-12 border-t border-white/5 pt-12">
-               <div>
-                  <h4 className="text-[10px] font-mono uppercase tracking-[0.3em] text-primary mb-4">Strategic Action</h4>
-                  <p className="text-sm text-slate-custom/80 leading-relaxed font-light">
-                    {cs.action} I implemented a centralized CRM architecture and performance dashboard system to provide real-time visibility across the UAE and Qatar portfolios.
+            
+            <div className="grid md:grid-cols-2 gap-10">
+               <div className="space-y-4">
+                  <h4 className="text-[10px] font-mono uppercase tracking-[0.4em] text-primary font-bold">Protocol Executed</h4>
+                  <p className="text-xs text-text-secondary leading-relaxed font-light">
+                    {cs.action} Deployment of centralized CRM architecture and performance dashboard clusters for UAE and Qatar portfolios.
                   </p>
                </div>
-               <div>
-                  <h4 className="text-[10px] font-mono uppercase tracking-[0.3em] text-white/30 mb-4">The Result</h4>
-                  <p className="text-2xl font-serif italic text-white leading-tight">
+               <div className="space-y-4">
+                  <h4 className="text-[10px] font-mono uppercase tracking-[0.4em] text-text-secondary/40">Expected Outcome</h4>
+                  <p className="text-2xl font-display italic font-bold text-text-primary leading-tight">
                     {cs.result}
                   </p>
                </div>
             </div>
-            <div className="pt-8 flex flex-wrap gap-3">
+            
+            <div className="pt-8 flex flex-wrap gap-2">
               {cs.tools.map(tool => (
-                <span key={tool} className="text-[10px] font-mono uppercase tracking-widest text-white/20 px-3 py-1 border border-white/5">
+                <span key={tool} className="text-[9px] font-mono font-bold uppercase tracking-widest text-primary/70 px-3 py-1 bg-primary/5 border border-primary/10 rounded-xs">
                   {tool}
                 </span>
               ))}
             </div>
+            
             <div className="pt-8">
-               <Button href="#case-studies" variant="outline" className="px-10 h-14" icon={<ArrowRight size={14} />}>
-                  View More Achievements
+               <Button href="#case-studies" className="h-14 px-12 group">
+                  EXPLORE ARCHIVE <ArrowRight size={14} className="ml-4 group-hover:translate-x-2 transition-transform" />
                </Button>
             </div>
           </div>
@@ -165,22 +178,34 @@ export function FeaturedCaseStudy() {
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          className="relative aspect-square lg:aspect-auto lg:h-[700px] bg-white/5 border border-white/10 p-12 flex flex-col justify-end"
+          className="relative aspect-square lg:aspect-auto lg:h-[750px] bg-surface/50 backdrop-blur-xl border border-border-subtle p-12 flex flex-col justify-end rounded-3xl group overflow-hidden"
         >
-           <div className="absolute top-0 right-0 p-12 text-[12vw] font-serif italic text-white/[0.02] leading-none select-none pointer-events-none">
-             Growth
+           {/* Animated Background Pulse */}
+           <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 blur-[100px] rounded-full group-hover:bg-primary/10 transition-all duration-1000" />
+           <div className="absolute -top-10 -right-10 text-[180px] font-display font-black text-text-primary/[0.03] leading-none select-none pointer-events-none group-hover:text-text-primary/[0.05] transition-all duration-1000">
+             001
            </div>
            
-           <div className="space-y-10 relative z-10">
+           <div className="space-y-12 relative z-10">
               <div className="flex items-center gap-6">
-                <div className="w-12 h-1 bg-primary" />
-                <div className="text-primary font-mono text-[10px] tracking-widest uppercase">Key Metric</div>
+                <div className="w-12 h-px bg-primary" />
+                <div className="text-primary font-mono text-[10px] tracking-[0.4em] uppercase font-bold">Impact Dashboard</div>
               </div>
-              <div className="text-7xl md:text-9xl font-serif italic text-white leading-none">
-                35% <span className="text-2xl not-italic font-mono uppercase tracking-tighter text-white/40 block mt-4">Uplift in Qualified Leads</span>
+              
+              <div className="space-y-2">
+                <div className="text-8xl md:text-9xl font-display font-light text-text-primary leading-none tracking-tighter">
+                  35% <span className="font-bold italic text-primary">+</span>
+                </div>
+                <div className="text-lg font-mono uppercase tracking-tighter text-text-secondary/60">
+                  Uplift in Qualified Pipeline
+                </div>
               </div>
-              <div className="text-white/40 max-w-sm text-sm font-light leading-relaxed">
-                Integrated demand generation combined with workflow automation reduced leakage and increased conversion velocity.
+              
+              <div className="p-6 bg-background/50 border border-border-subtle rounded-2xl max-w-sm backdrop-blur-md">
+                <div className="text-[10px] font-mono text-text-secondary/40 uppercase mb-4">Neural Analytics</div>
+                <p className="text-xs text-text-secondary font-light leading-relaxed">
+                  Integrated demand gen systems combined with cognitive CRM automation reduced lead leakage by 74% and accelerated conversion velocity.
+                </p>
               </div>
            </div>
         </motion.div>
@@ -190,46 +215,45 @@ export function FeaturedCaseStudy() {
 }
 
 function CaseStudyCard({ cs, index }: CaseStudyCardProps) {
-  // Use solid color for the first one like the design sample
-  const isFeatured = index === 0;
-
   return (
     <motion.div
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      transition={{ duration: 0.8 }}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
       viewport={{ once: true }}
-      className={`p-12 flex flex-col justify-between min-h-[500px] ${isFeatured ? 'bg-primary text-navy' : 'bg-navy text-slate-Custom border border-white/5'}`}
+      className="group relative overflow-hidden bg-surface border border-border-subtle p-12 flex flex-col justify-between min-h-[550px] rounded-3xl hover:border-primary/40 transition-all duration-500"
     >
-      <div>
-        <h4 className={`text-[10px] font-mono uppercase tracking-[0.3em] mb-10 pb-2 border-b ${isFeatured ? 'border-navy/20' : 'border-white/10 text-white/40'}`}>
-          {isFeatured ? 'Featured Achievement' : `Project 0${index + 1}`}
-        </h4>
-        <h3 className={`text-3xl md:text-4xl font-serif italic leading-tight mb-8 ${isFeatured ? 'font-bold' : 'text-white'}`}>
+      <div className="absolute top-0 right-0 p-8 text-4xl font-display font-bold text-text-primary/[0.05] group-hover:text-primary transition-colors">
+        0{index + 1}
+      </div>
+
+      <div className="relative z-10">
+        <div className="inline-block px-3 py-1 bg-background border border-border-subtle rounded-full text-[9px] font-mono font-bold text-text-secondary/40 mb-10 uppercase tracking-widest">
+           System Log Trace
+        </div>
+        <h3 className="text-4xl md:text-5xl font-display font-light leading-[0.95] tracking-tightest mb-8 text-text-primary group-hover:text-primary transition-colors">
           {cs.title}
         </h3>
       </div>
 
-      <div className="space-y-10">
-        <div className="grid md:grid-cols-2 gap-8">
+      <div className="space-y-12 relative z-10">
+        <div className="grid md:grid-cols-2 gap-10">
           <div>
-            <h5 className={`text-[9px] font-mono uppercase tracking-widest mb-3 ${isFeatured ? 'opacity-60' : 'text-white/20'}`}>Challenge</h5>
-            <p className={`text-sm leading-relaxed ${isFeatured ? 'font-medium' : 'font-light text-slate-400'}`}>{cs.challenge}</p>
+            <h5 className="text-[9px] font-mono uppercase tracking-[0.4em] mb-4 text-text-secondary/40 font-bold">Vector Scope</h5>
+            <p className="text-sm leading-relaxed font-light text-text-secondary italic">{cs.challenge}</p>
           </div>
           <div>
-            <h5 className={`text-[9px] font-mono uppercase tracking-widest mb-3 ${isFeatured ? 'opacity-60' : 'text-white/20'}`}>Result</h5>
-            <p className={`text-sm leading-relaxed ${isFeatured ? 'font-bold' : 'font-medium text-white'}`}>{cs.result}</p>
+            <h5 className="text-[9px] font-mono uppercase tracking-[0.4em] mb-4 text-text-secondary/40 font-bold">Optimization Output</h5>
+            <p className="text-sm leading-relaxed font-bold text-text-primary tracking-tight">{cs.result}</p>
           </div>
         </div>
 
-        <div className={`pt-6 border-t ${isFeatured ? 'border-navy/20' : 'border-white/10'}`}>
-          <div className="flex flex-wrap gap-2">
-            {cs.tools.map(tool => (
-              <span key={tool} className={`text-[9px] font-mono px-2 py-1 ${isFeatured ? 'bg-navy/10' : 'bg-white/5 text-white/40'}`}>
-                {tool}
-              </span>
-            ))}
-          </div>
+        <div className="pt-8 border-t border-border-subtle flex flex-wrap gap-2">
+          {cs.tools.map(tool => (
+            <span key={tool} className="text-[10px] font-mono px-3 py-1 bg-background border border-border-subtle text-text-secondary/60 rounded-sm">
+              {tool}
+            </span>
+          ))}
         </div>
       </div>
     </motion.div>
