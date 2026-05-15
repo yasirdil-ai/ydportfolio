@@ -59,7 +59,7 @@ export default function App() {
           <div className="grid md:grid-cols-12 gap-12 items-start">
             <div className="md:col-span-8">
               <h2 className="text-4xl md:text-6xl font-display font-light text-text-primary leading-tight mb-12 tracking-tight">
-                Senior marketing leader with <span className="font-bold underline decoration-primary/20 underline-offset-[12px] decoration-4">11+ years</span> of building growth engines for global knowledge brands.
+                <span className="font-bold text-primary italic">Yasir Dil</span> is a senior marketing leader with <span className="font-bold underline decoration-primary/20 underline-offset-[12px] decoration-4">11+ years</span> of building growth engines for global knowledge brands.
               </h2>
               <div className="flex flex-col sm:flex-row gap-10 items-start">
                 <div className="flex-shrink-0 w-28 h-28 rounded-2xl overflow-hidden border border-border-subtle p-1 hover:border-primary/30 transition-all duration-500 group">

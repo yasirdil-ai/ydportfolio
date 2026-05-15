@@ -60,7 +60,7 @@ export function Navbar() {
             <div className="w-4 h-4 border-2 border-background" />
           </div>
           <span className="text-xl font-display font-bold tracking-tighter text-text-primary">
-            YDNK<span className="text-primary">.ONLINE</span>
+            Yasir Dil // <span className="text-primary">YDNK</span>
           </span>
         </a>
 
@@ -183,7 +183,7 @@ export function Hero() {
         >
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 border border-primary/20 text-primary text-[10px] font-mono font-bold tracking-widest rounded-full mb-8">
             <span className="w-1.5 h-1.5 bg-primary rounded-full animate-ping" />
-            AI-POWERED GROWTH STRATEGY
+            YASIR DIL // STRATEGIC GROWTH OPS
           </div>
 
           <h1 className="text-6xl md:text-8xl lg:text-9xl font-display font-light leading-[0.9] text-text-primary tracking-tightest mb-10">

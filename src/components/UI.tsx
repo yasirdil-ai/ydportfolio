@@ -38,7 +38,7 @@ interface ButtonProps {
 }
 
 export function Button({ children, onClick, href, variant = "primary", className = "", icon, download, type = "button", disabled = false }: ButtonProps) {
-  const baseStyles = "relative overflow-hidden inline-flex items-center justify-center gap-3 px-8 py-4 font-bold transition-all duration-500 active:scale-95 text-[10px] uppercase tracking-[0.3em] disabled:opacity-50 disabled:pointer-events-none rounded-xl group";
+  const baseStyles = "relative overflow-hidden inline-flex items-center justify-center gap-3 px-8 py-4 font-bold transition-all duration-500 hover:scale-[1.02] active:scale-95 text-[10px] uppercase tracking-[0.3em] disabled:opacity-50 disabled:pointer-events-none rounded-xl group";
   
   const variants = {
     primary: "bg-primary text-background hover:shadow-[0_0_30px_rgba(var(--primary-rgb),0.4)]",
